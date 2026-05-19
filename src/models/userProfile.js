@@ -41,21 +41,10 @@ const userProfileSchema = new mongoose.Schema(
     },
 
     preferredCategories: [
-      {
-        type: String,
-        enum: [
-          "tracking",
-          "summer-wear",
-          "winter-wear",
-          "work-wear",
-          "sportswear",
-          "casual-wear",
-          "party-wear",
-          "ethnic-wear",
-          "formal-wear"
-        ]
-      }
-    ],
+        {
+          type: String
+        }
+      ],
 
     preferredBrands: [
       {
