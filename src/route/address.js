@@ -5,7 +5,8 @@ import {
   getAddresses,
   getAddressById,
   updateAddress,
-  deleteAddress
+  deleteAddress,
+  getAddressesByUserId
 } from "../controller/address.js";
 
 const router = express.Router();
@@ -18,5 +19,8 @@ router.route("/:id")
     .get(getAddressById)
     .put(updateAddress)
     .delete(deleteAddress);
+
+router.route("/user/:userId")
+    .get(getAddressesByUserId);
 
 export default router;

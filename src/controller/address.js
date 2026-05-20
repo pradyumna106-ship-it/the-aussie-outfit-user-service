@@ -50,6 +50,29 @@ export const getAddresses = async (req, res) => {
   }
 };
 
+// ==============================
+// GET ADDRESSES By USER ID
+// ==============================
+export const getAddressesByUserId = async (req, res) => {
+  try {
+
+    const addresses = await Address.find({ userId: req.params.userId });
+
+    return res.status(200).json({
+      success: true,
+      count: addresses.length,
+      data: addresses
+    });
+
+  } catch (error) {
+
+    return res.status(500).json({
+      success: false,
+      message: error.message
+    });
+  }
+};
+
 
 // ==============================
 // GET ADDRESS BY ID
