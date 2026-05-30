@@ -1,5 +1,11 @@
 {
   "version": 2,
+  "builds": [
+    {
+      "src": "arc/index.js",
+      "use": "@vercel/node"
+    }
+  ],
   "routes": [
     { "src": "/(.*)", "dest": "/src/index.js" }
   ],
