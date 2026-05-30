@@ -1,11 +1,7 @@
-// controllers/newsletterPreference.controller.js
+// controllers/NewsletterSubscriber.controller.js
 
-import NewsletterPreference from "../models/newsletterPreference.js";
+import NewsletterSubscriber from "../models/newsletterPreference.js";
 
-
-// ==============================
-// CREATE NEWSLETTER PREFERENCE
-// ==============================
 export const subscribeNewsletter = async (
   req,
   res
@@ -13,24 +9,21 @@ export const subscribeNewsletter = async (
   try {
     const { email, category } = req.body;
 
-    const existing =
-      await NewsletterSubscriber.findOne({
-        email
-      });
+    const existing = await NewsletterSubscriber.findOne({ email });
+
 
     if (existing) {
-      return res.status(400).json({
-        success: false,
-        message:
-          "Email already subscribed"
-      });
-    }
+        return res.status(200).json({
+          success: true,
+          message: "Already subscribed",
+          data: existing
+        });
+      }
 
-    const subscriber =
-      await NewsletterSubscriber.create({
-        email,
-        category
-      });
+    const subscriber = await NewsletterSubscriber.create({
+      email,
+      category
+    });
 
     return res.status(201).json({
       success: true,
@@ -43,15 +36,37 @@ export const subscribeNewsletter = async (
     });
   }
 };
+// ==============================
+// CREATE NEWSLETTER PREFERENCE
+// ==============================
+export const createNewsletterSubscriber = async (req, res) => {
+  try {
+
+    const preference = await NewsletterSubscriber.create(req.body);
+
+    return res.status(201).json({
+      success: true,
+      message: "Newsletter preference created successfully",
+      data: preference
+    });
+
+  } catch (error) {
+
+    return res.status(500).json({
+      success: false,
+      message: error.message
+    });
+  }
+};
 
 
 // ==============================
 // GET ALL NEWSLETTER PREFERENCES
 // ==============================
-export const getNewsletterPreferences = async (req, res) => {
+export const getNewsletterSubscribers = async (req, res) => {
   try {
 
-    const preferences = await NewsletterPreference.find();
+    const preferences = await NewsletterSubscriber.find();
 
     return res.status(200).json({
       success: true,
@@ -72,10 +87,10 @@ export const getNewsletterPreferences = async (req, res) => {
 // ==============================
 // GET NEWSLETTER PREFERENCE BY ID
 // ==============================
-export const getNewsletterPreferenceById = async (req, res) => {
+export const getNewsletterSubscriberById = async (req, res) => {
   try {
 
-    const preference = await NewsletterPreference.findById(req.params.id);
+    const preference = await NewsletterSubscriber.findById(req.params.id);
 
     if (!preference) {
       return res.status(404).json({
@@ -102,10 +117,10 @@ export const getNewsletterPreferenceById = async (req, res) => {
 // ==============================
 // UPDATE NEWSLETTER PREFERENCE
 // ==============================
-export const updateNewsletterPreference = async (req, res) => {
+export const updateNewsletterSubscriber = async (req, res) => {
   try {
 
-    const updatedPreference = await NewsletterPreference.findByIdAndUpdate(
+    const updatedPreference = await NewsletterSubscriber.findByIdAndUpdate(
       req.params.id,
       req.body,
       {
@@ -140,10 +155,10 @@ export const updateNewsletterPreference = async (req, res) => {
 // ==============================
 // DELETE NEWSLETTER PREFERENCE
 // ==============================
-export const deleteNewsletterPreference = async (req, res) => {
+export const deleteNewsletterSubscriber = async (req, res) => {
   try {
 
-    const deletedPreference = await NewsletterPreference.findByIdAndDelete(req.params.id);
+    const deletedPreference = await NewsletterSubscriber.findByIdAndDelete(req.params.id);
 
     if (!deletedPreference) {
       return res.status(404).json({

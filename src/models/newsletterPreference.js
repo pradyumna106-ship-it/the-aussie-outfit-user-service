@@ -25,7 +25,9 @@ const newsletterSubscriberSchema = new mongoose.Schema(
   }
 );
 
-export default mongoose.model(
+const NewsletterSubscriber = mongoose.model(
   "NewsletterSubscriber",
   newsletterSubscriberSchema
 );
+
+export default NewsletterSubscriber;
