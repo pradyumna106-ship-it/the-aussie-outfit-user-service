@@ -1,60 +1,31 @@
 import mongoose from "mongoose";
 
-const newsletterPreferenceSchema = new mongoose.Schema(
+const newsletterSubscriberSchema = new mongoose.Schema(
   {
-    userId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+    email: {
+      type: String,
       required: true,
       unique: true,
-      index: true
+      lowercase: true,
+      trim: true
+    },
+
+    category: {
+      type: String,
+      default: "General"
     },
 
     isSubscribed: {
       type: Boolean,
       default: true
-    },
-
-    emailNotifications: {
-      type: Boolean,
-      default: true
-    },
-
-    smsNotifications: {
-      type: Boolean,
-      default: false
-    },
-
-    promotionalOffers: {
-      type: Boolean,
-      default: true
-    },
-
-    newArrivals: {
-      type: Boolean,
-      default: true
-    },
-
-    orderUpdates: {
-      type: Boolean,
-      default: true
-    },
-
-    preferredCategories: [
-      {
-        type: String
-      }
-    ]
+    }
   },
   {
-    timestamps: true,
-    collection: "newsletterPreferences"
+    timestamps: true
   }
 );
 
-const NewsletterPreference = mongoose.model(
-  "NewsletterPreference",
-  newsletterPreferenceSchema
+export default mongoose.model(
+  "NewsletterSubscriber",
+  newsletterSubscriberSchema
 );
-
-export default NewsletterPreference;

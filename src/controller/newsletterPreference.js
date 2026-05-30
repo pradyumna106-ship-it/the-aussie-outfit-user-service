@@ -6,19 +6,37 @@ import NewsletterPreference from "../models/newsletterPreference.js";
 // ==============================
 // CREATE NEWSLETTER PREFERENCE
 // ==============================
-export const createNewsletterPreference = async (req, res) => {
+export const subscribeNewsletter = async (
+  req,
+  res
+) => {
   try {
+    const { email, category } = req.body;
 
-    const preference = await NewsletterPreference.create(req.body);
+    const existing =
+      await NewsletterSubscriber.findOne({
+        email
+      });
+
+    if (existing) {
+      return res.status(400).json({
+        success: false,
+        message:
+          "Email already subscribed"
+      });
+    }
+
+    const subscriber =
+      await NewsletterSubscriber.create({
+        email,
+        category
+      });
 
     return res.status(201).json({
       success: true,
-      message: "Newsletter preference created successfully",
-      data: preference
+      data: subscriber
     });
-
   } catch (error) {
-
     return res.status(500).json({
       success: false,
       message: error.message

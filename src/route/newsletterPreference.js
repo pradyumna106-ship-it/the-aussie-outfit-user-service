@@ -3,18 +3,18 @@
 import express from "express";
 
 import {
-  createNewsletterPreference,
   getNewsletterPreferences,
   getNewsletterPreferenceById,
   updateNewsletterPreference,
-  deleteNewsletterPreference
+  deleteNewsletterPreference,
+  subscribeNewsletter
 } from "../controller/newsletterPreference.js";
 
 const router = express.Router();
 
 router.route("/")
     .get(getNewsletterPreferences)
-    .post(createNewsletterPreference);
+    .post(subscribeNewsletter);
 
 router.route("/:id")
     .get(getNewsletterPreferenceById)
